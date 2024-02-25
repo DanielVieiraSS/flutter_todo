@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/widgets/todo_item.dart';
+import 'package:flutter_todo/widgets/checkable_todo_item.dart';
 
 class Todo {
   const Todo(this.text, this.priority);
@@ -51,31 +51,37 @@ class _KeysState extends State<Keys> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton.icon(
-            onPressed: _changeOrder,
-            icon: Icon(
-              _order == 'asc' ? Icons.arrow_downward : Icons.arrow_upward,
-            ),
-            label: Text('Sort ${_order == 'asc' ? 'Descending' : 'Ascending'}'),
-          ),
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              // for (final todo in _orderedTodos) TodoItem(todo.text, todo.priority),
-              for (final todo in _orderedTodos)
-                TodoItem(
-                  todo.text,
-                  todo.priority,
+    return Scaffold(
+      body: Expanded(
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                onPressed: _changeOrder,
+                icon: Icon(
+                  _order == 'asc' ? Icons.arrow_downward : Icons.arrow_upward,
                 ),
-            ],
-          ),
+                label: Text(
+                    'Sort ${_order == 'asc' ? 'Descending' : 'Ascending'}'),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  // for (final todo in _orderedTodos) TodoItem(todo.text, todo.priority),
+                  for (final todo in _orderedTodos)
+                    CheckableTodoItem(
+                      key: ValueKey(),
+                      todo.text,
+                      todo.priority,
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
